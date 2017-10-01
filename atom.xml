@@ -4,7 +4,7 @@
   <title><![CDATA[我的项目]]></title>
   <link href="http://gritfjh.github.io/atom.xml" rel="self"/>
   <link href="http://gritfjh.github.io/"/>
-  <updated>2017-10-01T16:53:10+08:00</updated>
+  <updated>2017-10-01T19:33:10+08:00</updated>
   <id>http://gritfjh.github.io/</id>
   <author>
     <name><![CDATA[gritFJH]]></name>
@@ -18,23 +18,31 @@
     <link href="http://gritfjh.github.io/blog/2017/10/01/python-01/"/>
     <updated>2017-10-01T15:13:47+08:00</updated>
     <id>http://gritfjh.github.io/blog/2017/10/01/python-01</id>
-    <content type="html"><![CDATA[<hr />
+    <content type="html"><![CDATA[<blockquote><p>项目为学习项目：
+   视频地址：<a href="http://www.jikexueyuan.com/course/2320.html">极客学院</a></p></blockquote>
+
+<hr />
 
 <p>1.<a href="#01">项目开发流程</a><br>
 2.<a href="#02">本项目的需求分析</a><br>
 3.<a href="#03">本项目编程思路-初步设计阶段</a><br>
-4.<a href="#04">用Python在本地实现重启或关机</a><br></p>
+4.<a href="#04">用Python在本地实现重启或关机</a><br>
+5.<a href="#05">远程控制渠道-电子邮件</a><br>
+6.<a href="#06">项目模块划分与整合</a><br>
+7.<a href="#07">项目的测试与完善</a><br>
+8.<a href="#08">项目打包为EXE文件</a><br>
+9.<a href="#09">最后说明</a><br></p>
 
 <hr />
 
 <!--more-->
 
 
-<p><span id="01"><strong>项目开发流程</strong></span></p>
+<h2><span id="01"><strong>项目开发流程</strong></span></h2>
 
 <p>项目开发大致流程步骤：1.需求分析 2.设计 3.编写 4.测试 5.使用 6.维护</p>
 
-<p><span id="02"><strong>本项目的需求分析</strong></span></p>
+<h2><span id="02"><strong>本项目的需求分析</strong></span></h2>
 
 <p>本项目中，要实现一个远程通过网络控制电脑重启或关机的Python项目，那么其需求分析简单的来说，为如下部分：</p>
 
@@ -48,16 +56,125 @@
 
 <p>。。。。</p>
 
-<p><span id="03"><strong>本项目编程思路-初步设计阶段</strong></span></p>
+<h2><span id="03"><strong>本项目编程思路-初步设计阶段</strong></span></h2>
 
 <p>本项目要做一个实现远程控制重启或关机功能的Python小软件。所以首先要知道在本地如何通过Python控制电脑的重启与关机，然后我们需要知道如何远程发消息给Python程序。那么在这里，我们可以这样：首先，我们可以利用Python的标准库控制本机电脑重启或关机，然后要实现远程，可以把电子邮件作为远程控制的渠道，我们用Python自动登录邮箱检测邮件，当我们发送关机指令给这个邮箱的时候，若Python检测到关机的指令，那么Python直接发送本机的关闭，电脑执行关机操作。</p>
 
-<p><span id="04"><strong>用Python在本地实现重启或关机</strong></span></p>
+<h2><span id="04"><strong>用Python在本地实现重启或关机</strong></span></h2>
 
 <pre><code>import os
 os.system('shutdown -s -t 1')  #关机
 #os.system('shutdown -r')  #重启
 </code></pre>
+
+<h2><span id="05"><strong>远程控制渠道-电子邮件</strong></span></h2>
+
+<p>注意：需要在邮箱后台设置中开启POP3和SMTP</p>
+
+<p><strong>使用的库</strong></p>
+
+<pre><code>#电子邮件的操作
+import poplib
+import smtplib
+from email.header import decode_header
+from email.mime.text import MIMEText
+import email
+</code></pre>
+
+<p><strong>登录邮箱</strong></p>
+
+<pre><code>#如何登录邮箱
+#按目的分为是为发送邮件而登录还是为了读取邮件而登录
+#先说为发送邮件而登录的操作。一般来说，登录使用SMTP，发送使用POP
+sent = smtplib.SMTP('smtp.sina.com')
+sent.login('username@sina.com', 'password')#这里一定注意，填的是独立密码
+</code></pre>
+
+<p><strong>发送邮件</strong></p>
+
+<pre><code>#发送邮件
+#刚才我们已经登陆了，现在需要设置发送内容然后发送即可
+to = ['username@sina.com', 'usernam@163.com']
+content = MIMEText('How are you ?')
+content['Subject'] = 'hello'
+content['From'] = 'username@sina.com'
+content['To'] = ','.join(to)
+sent.sendmail('username@sina.com', to, content.as_string())
+sent.close() #关闭邮箱
+</code></pre>
+
+<p><strong>读取邮件</strong></p>
+
+<pre><code>#读取邮件
+read = poplib.POP3('pop.sina.com')
+read.user('username@sina.com')#这里设置登录帐号
+read.pass_('password')
+tongji = read.stat()
+str = read.top(tongji[0], 0)#服务器将返回由参数标识的邮件前0行内容，最后str为一个列表，有三个元素
+str2 = []
+for x in str[1]:#其中str[1],也就是str中的第二个参数为第一封邮件的各种信息，在这里要给其进行编码
+    try:
+        str2.append(x.decode())
+    except:
+        try:
+            str2.append(x.decode('gbk'))
+        except:
+            str2.append(x.decode('big5'))
+msg = email.message_from_string('\n'.join(str2))#这个方法能把string的邮件转换成email.message实例
+#msg是把经过编码的str2转化为可识别的邮件信息，并且每行信息.join()来连接字符串
+biaoti = decode_header(msg['subject'])
+if biaoti[0][1]:#如果有第二个元素，就说明有编码信息
+    biaoti2 = biaoti[0][0].decode(biaoti[0][1])
+else:
+    biaoti2 = biaoti[0][0]
+</code></pre>
+
+<h2><span id="06"><strong>项目的模块划分与整合</strong></span></h2>
+
+<pre><code>#模块划分(大致，不要注重语法细节)
+#软件工程项目中，一般对于这种项目需要按照模块的思路去做，一个模块负责一项或者多项特定的功能，各个模块之间通过接口进行设计，在此模块指的是此模块中的函数
+def guanji():
+    a = 1
+    #此函数负责发送关机的标题（guan）给邮箱
+def chongqi():
+    a = 1
+    #此函数负责发送重启的标题（chong）给邮箱
+def read():
+    a = 1
+    #此函数负责读取邮件中的指令，指令为guan返回0，指令为chong返回1
+if _name_ == '_main_':
+    if read() == 0:
+        os.system('shutdown -s -t 1')
+        break
+    if read() == 1:
+        os.system('shutdown -r')
+        break
+</code></pre>
+
+<h2><span id="07"><strong>项目测试与完善</strong></span></h2>
+
+<p>将整个项目运行起来之后会发现，如果邮箱中残存有上次接收的"guan"或者"chong"字样的标题邮件，程序就会直接关机或者重启计算机，即是我们什么也没发，因此，要在每次执行关机或重启的同事，将邮件重置（即发送一封除"guan"和“chong”之外的任意标题邮件给邮箱）</p>
+
+<pre><code>sent = smtplib.SMTP('smtp.sina.com')
+sent.login('username@sina.com', 'password')
+to = ['sdsxfjh@sina.com', 'sdsxfjh@163.com']
+content = MIMEText('')
+content['Subject'] = 'reflash'
+content['From'] = 'username@sina.com'
+content['To'] = ','.join(to)
+sent.sendmail('username@sina.com', to, content.as_string())
+sent.close()  # 关闭邮箱
+</code></pre>
+
+<h2><span id="08"><strong>项目打包为EXE文件</strong></span></h2>
+
+<p>具体实现参照：<a href="http://www.fengjiaheng.top/2017/04/22/python%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%AF%91%E4%B8%BAexe%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6/">Python程序编译为EXE可执行文件</a></p>
+
+<h2><span id="09"><strong>最后说明</strong></span></h2>
+
+<p>1.邮箱最好用QQ邮箱</p>
+
+<p>2.项目源代码：<a href="https://github.com/gritFJH/Python-and-Crawler/tree/master/Python01">GitHub地址</a></p>
 ]]></content>
   </entry>
   
