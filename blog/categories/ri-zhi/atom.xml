@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 日志 | 我的项目]]></title>
+  <link href="http://gritfjh.github.io/blog/categories/ri-zhi/atom.xml" rel="self"/>
+  <link href="http://gritfjh.github.io/"/>
+  <updated>2017-10-01T16:53:10+08:00</updated>
+  <id>http://gritfjh.github.io/</id>
+  <author>
+    <name><![CDATA[gritFJH]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[我的第一篇Octopress博客]]></title>
+    <link href="http://gritfjh.github.io/blog/2017/09/28/first/"/>
+    <updated>2017-09-28T10:00:23+08:00</updated>
+    <id>http://gritfjh.github.io/blog/2017/09/28/first</id>
+    <content type="html"><![CDATA[<!--more-->
+
+
+<h1>Hello World!</h1>
+
+<h2>这是我的第一篇Octopress博客</h2>
+]]></content>
+  </entry>
+  
+</feed>

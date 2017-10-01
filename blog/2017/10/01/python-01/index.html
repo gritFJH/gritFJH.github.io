@@ -5,14 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>我的项目</title>
+  <title>Python-邮件远程操控电脑关机重启 - 我的项目</title>
   <meta name="author" content="gritFJH">
 
   
-  <meta name="description" content=" 1.项目开发流程
+  <meta name="description" content="1.项目开发流程
 2.本项目的需求分析
 3.本项目编程思路-初步设计阶段
-4.用Python在本地实现重启或关机 ">
+4.用Python在本地实现重启或关机 项目开发流程 项目开发大致流程步骤：1.需求分析 2.设计 3.编写 4.测试 5.使用 6.维护 本项目的需求分析 本项目中， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://gritfjh.github.io/">
+  <link rel="canonical" href="http://gritfjh.github.io/blog/2017/10/01/python-01/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="我的项目" type="application/atom+xml">
@@ -68,15 +68,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2017/10/01/python-01/">Python-邮件远程操控电脑关机重启</a></h1>
+      <h1 class="entry-title">Python-邮件远程操控电脑关机重启</h1>
     
     
       <p class="meta">
@@ -92,7 +89,7 @@
   </header>
 
 
-  <div class="entry-content"><hr />
+<div class="entry-content"><hr />
 
 <p>1.<a href="#01">项目开发流程</a><br>
 2.<a href="#02">本项目的需求分析</a><br>
@@ -101,55 +98,76 @@
 
 <hr />
 
+<!--more-->
+
+
+<p><span id="01"><strong>项目开发流程</strong></span></p>
+
+<p>项目开发大致流程步骤：1.需求分析 2.设计 3.编写 4.测试 5.使用 6.维护</p>
+
+<p><span id="02"><strong>本项目的需求分析</strong></span></p>
+
+<p>本项目中，要实现一个远程通过网络控制电脑重启或关机的Python项目，那么其需求分析简单的来说，为如下部分：</p>
+
+<p>1.范围：用Python开发一个远程操纵电脑重启或关机的项目。</p>
+
+<p>2.总体要求：</p>
+
+<p>2.1 总体功能要求：能够通过该软件实现远程控制该软件所在的电脑重启或者关机操作。</p>
+
+<p>2.2 系统要求：开发语言使用Python，并且开发出来的程序能够在Windows上面运行</p>
+
+<p>。。。。</p>
+
+<p><span id="03"><strong>本项目编程思路-初步设计阶段</strong></span></p>
+
+<p>本项目要做一个实现远程控制重启或关机功能的Python小软件。所以首先要知道在本地如何通过Python控制电脑的重启与关机，然后我们需要知道如何远程发消息给Python程序。那么在这里，我们可以这样：首先，我们可以利用Python的标准库控制本机电脑重启或关机，然后要实现远程，可以把电子邮件作为远程控制的渠道，我们用Python自动登录邮箱检测邮件，当我们发送关机指令给这个邮箱的时候，若Python检测到关机的指令，那么Python直接发送本机的关闭，电脑执行关机操作。</p>
+
+<p><span id="04"><strong>用Python在本地实现重启或关机</strong></span></p>
+
+<pre><code>import os
+os.system('shutdown -s -t 1')  #关机
+#os.system('shutdown -r')  #重启
+</code></pre>
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2017/10/01/python-01/">更多.. &rarr;</a>
-    </footer>
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2017/09/28/first/">我的第一篇Octopress博客</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2017-09-28T10:00:23+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>10:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"></div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2017/09/28/first/">更多.. &rarr;</a>
-    </footer>
   
 
+<span class="byline author vcard">Posted by <span class="fn">gritFJH</span></span>
 
-    </article>
+      
+
+
+
+
+<time class='entry-date' datetime='2017-10-01T15:13:47+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2017</span></span> <span class='time'>3:13 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
   
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2017/09/28/first/" title="Previous Post: 我的第一篇Octopress博客">&laquo; 我的第一篇Octopress博客</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -173,6 +191,7 @@
 
   
 </aside>
+
 
     </div>
   </div>
