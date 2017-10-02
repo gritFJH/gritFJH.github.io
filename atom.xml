@@ -4,7 +4,7 @@
   <title><![CDATA[我的项目]]></title>
   <link href="http://gritfjh.github.io/atom.xml" rel="self"/>
   <link href="http://gritfjh.github.io/"/>
-  <updated>2017-10-01T19:33:10+08:00</updated>
+  <updated>2017-10-02T11:00:46+08:00</updated>
   <id>http://gritfjh.github.io/</id>
   <author>
     <name><![CDATA[gritFJH]]></name>
@@ -172,7 +172,7 @@ sent.close()  # 关闭邮箱
 
 <h2><span id="09"><strong>最后说明</strong></span></h2>
 
-<p>1.邮箱最好用QQ邮箱</p>
+<p>1.邮箱最好不要用QQ邮箱</p>
 
 <p>2.项目源代码：<a href="https://github.com/gritFJH/Python-and-Crawler/tree/master/Python01">GitHub地址</a></p>
 ]]></content>
